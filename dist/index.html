@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ibrahim Amer Minecraft</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Segoe UI", Tahoma, Arial, sans-serif; background: #0e1420; color: #eef3f8; line-height: 1.7; }
+  header { background: linear-gradient(135deg, #2e7d32, #1b5e20); padding: 28px 20px; text-align: center; border-bottom: 4px solid #111; }
+  header h1 { font-size: 2rem; letter-spacing: .5px; }
+  header p { opacity: .9; }
+  .badge { display: inline-block; background: #111a; border: 1px solid #fff3; padding: 2px 12px; border-radius: 20px; font-size: .85rem; margin-top: 8px; }
+  main { max-width: 1000px; margin: 0 auto; padding: 24px 16px 60px; }
+  .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; background: #16202f; border: 1px solid #2a3a52; border-radius: 14px; padding: 20px; margin-bottom: 22px; }
+  @media (max-width: 720px) { .hero { grid-template-columns: 1fr; } }
+  canvas#demo { width: 100%; height: 300px; background: linear-gradient(#87ceeb, #cfeefb 70%, #7cbf5a 70%, #5da244); border-radius: 10px; border: 2px solid #00000055; }
+  .btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+  .btn { background: #43a047; color: #fff; border: none; border-radius: 8px; padding: 10px 18px; font-size: 1rem; cursor: pointer; }
+  .btn.secondary { background: #1e88e5; }
+  .btn:active { transform: scale(.97); }
+  section.card { background: #16202f; border: 1px solid #2a3a52; border-radius: 14px; padding: 20px; margin-bottom: 18px; }
+  section.card h2 { margin-bottom: 10px; color: #a5d6a7; }
+  .blocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 10px; }
+  .block { border-radius: 10px; padding: 12px; text-align: center; font-weight: bold; color: #fff; text-shadow: 0 1px 2px #000; border: 2px solid #00000066; }
+  .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 720px) { .controls { grid-template-columns: 1fr; } }
+  code, pre { background: #0a0f18; border: 1px solid #2a3a52; border-radius: 8px; padding: 2px 8px; direction: ltr; display: inline-block; }
+  pre { display: block; padding: 12px; overflow-x: auto; margin-top: 8px; }
+  ul { padding-right: 20px; }
+  li { margin-bottom: 6px; }
+  footer { text-align: center; padding: 22px; color: #9fb0c3; border-top: 1px solid #2a3a52; }
+</style>
+</head>
+<body>
+<header>
+  <h1>⛏️ Ibrahim Amer Minecraft</h1>
+  <p>لعبة مكعبات 3D بأسلوب Minecraft — Python + Kivy (ديسكتوب + Android APK)</p>
+  <span class="badge">© Ibrahim Amer</span>
+</header>
+<main>
+  <div class="hero">
+    <div>
+      <h2>عالم من البلوكات — ابنِ، اكسر، استكشف</h2>
+      <p>عالم فوكسل 24×24 مع تلال وأشجار، حركة وقفز، كاميرا باللمس، كسر ووضع البلوكات، و5 أنواع بلوكات.</p>
+      <div class="btns">
+        <button class="btn" onclick="regrow()">🌱 توليد عالم جديد</button>
+        <button class="btn secondary" onclick="toggleSpin()">🎥 تدوير تلقائي</button>
+      </div>
+      <p id="stat" style="margin-top:10px;color:#a5d6a7"></p>
+    </div>
+    <canvas id="demo" width="640" height="360"></canvas>
+  </div>
+
+  <section class="card">
+    <h2>🧱 أنواع البلوكات</h2>
+    <div class="blocks">
+      <div class="block" style="background:#61b844">Grass</div>
+      <div class="block" style="background:#8c6136">Dirt</div>
+      <div class="block" style="background:#8c8c91">Stone</div>
+      <div class="block" style="background:#734d26">Wood</div>
+      <div class="block" style="background:#338c38">Leaves</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🎮 التحكم</h2>
+    <div class="controls">
+      <div>
+        <h3>📱 موبايل (لمس)</h3>
+        <ul>
+          <li>D-pad يسار الشاشة = حركة</li>
+          <li>سحب الشاشة = تحريك الكاميرا</li>
+          <li>زر ⬆ قفز / ⛏ كسر / 🧱 وضع</li>
+          <li>الشريط السفلي = اختيار البلوك</li>
+        </ul>
+      </div>
+      <div>
+        <h3>🖥️ ديسكتوب</h3>
+        <ul>
+          <li><code>WASD</code> حركة + <code>Space</code> قفز</li>
+          <li>سحب الماوس = كاميرا</li>
+          <li>كليك يسار = كسر، يمين = وضع</li>
+          <li><code>1-5</code> اختيار البلوك</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>📦 التشغيل والتحويل إلى APK</h2>
+    <pre>cd ibrahim-amer-minecraft
+pip install -r requirements.txt
+python main.py</pre>
+    <pre>pip install buildozer
+buildozer android debug
+# bin/*.apk → ثبّته على هاتفك</pre>
+    <p>الملفات: <code>main.py</code> (اللعبة) • <code>world.py</code> (الفوكسل والفيزياء) • <code>renderer.py</code> (إسقاط 3D) • <code>buildozer.spec</code> (إعداد APK)</p>
+  </section>
+</main>
+<footer>© Ibrahim Amer — Ibrahim Amer Minecraft — صُنعت بـ Python و Kivy</footer>
+<script>
+// Isometric voxel demo: deterministic terrain + trees, auto-rotating camera.
+var seed = 7, spin = true, angle = 0.6;
+var cv = document.getElementById('demo'), ctx = cv.getContext('2d');
+function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+var H = [];
+function regrow() {
+  seed = (Math.random() * 1e9) | 0;
+  gen();
+}
+function gen() {
+  var s = seed;
+  H = [];
+  for (var x = 0; x < 12; x++) { H[x] = []; for (var z = 0; z < 12; z++) {
+    H[x][z] = 2 + Math.round(1.2 * Math.sin(x * .7 + s % 9) * Math.cos(z * .6 + s % 7));
+  }}
+  draw();
+  document.getElementById('stat').textContent = 'البلوكات: ' + countBlocks() + ' — اسحب أو فعّل التدوير';
+}
+function countBlocks() { var n = 0; for (var x = 0; x < 12; x++) for (var z = 0; z < 12; z++) n += H[x][z] + 1; return n; }
+function toggleSpin() { spin = !spin; }
+var colors = { grass: ['#61b844', '#4c9435', '#3f7d2c'], dirt: ['#8c6136', '#6f4c2a', '#5d4023'], stone: ['#9a9aa0', '#7a7a80', '#66666c'] };
+function cube(sx, sy, s, top, left, right) {
+  ctx.fillStyle = top; ctx.beginPath(); ctx.moveTo(sx, sy - s); ctx.lineTo(sx + s, sy - s / 2); ctx.lineTo(sx, sy); ctx.lineTo(sx - s, sy - s / 2); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = left; ctx.beginPath(); ctx.moveTo(sx - s, sy - s / 2); ctx.lineTo(sx, sy); ctx.lineTo(sx, sy + s); ctx.lineTo(sx - s, sy + s / 2); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = right; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + s, sy - s / 2); ctx.lineTo(sx + s, sy + s / 2); ctx.lineTo(sx, sy + s); ctx.closePath(); ctx.fill();
+}
+function draw() {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  var cx = cv.width / 2, base = cv.height - 40, s = 14;
+  var order = [];
+  for (var x = 0; x < 12; x++) for (var z = 0; z < 12; z++) order.push([x, z]);
+  order.sort(function (a, b) { return (a[0] + a[1]) - (b[0] + b[1]); });
+  order.forEach(function (c) {
+    var x = c[0], z = c[1], h = H[x][z];
+    for (var y = 0; y <= h; y++) {
+      var wob = spin ? Math.sin(angle + (x + z) * .3) * 3 : 0;
+      var sx = cx + (x - z) * s + wob, sy = base - (x + z) * (s / 2) - y * s;
+      var pal = (y === h) ? colors.grass : (y >= h - 2 ? colors.dirt : colors.stone);
+      if (sy > -20 && sy < cv.height + 20) cube(sx, sy, s, pal[0], pal[1], pal[2]);
+    }
+  });
+  // trees
+  [[3, 3], [8, 7], [5, 9]].forEach(function (t, i) {
+    var x = t[0], z = t[1], h = H[x][z];
+    var wob = spin ? Math.sin(angle + (x + z) * .3) * 3 : 0;
+    var sx = cx + (x - z) * s + wob, topY = base - (x + z) * (s / 2) - (h + 3) * s;
+    ctx.fillStyle = '#5d4023'; ctx.fillRect(sx - 4, topY, 8, 3 * s);
+    ctx.fillStyle = ['#2f7d32', '#338c38', '#2a7029'][i % 3];
+    ctx.beginPath(); ctx.arc(sx, topY - 8, 20, 0, 7); ctx.fill();
+  });
+}
+var dragX = null;
+cv.addEventListener('pointerdown', function (e) { dragX = e.clientX; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove', function (e) { if (dragX !== null) { angle += (e.clientX - dragX) * .02; dragX = e.clientX; draw(); } });
+cv.addEventListener('pointerup', function () { dragX = null; });
+setInterval(function () { if (spin) { angle += .03; draw(); } }, 80);
+gen();
+</script>
+</body>
+</html>
