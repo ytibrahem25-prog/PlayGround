@@ -1,0 +1,5 @@
+ursina>=6.0.0
+pillow>=9.0.0
+numpy>=1.22
+arabic-reshaper>=3.0.0
+python-bidi>=0.4.2
